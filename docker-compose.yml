@@ -1,0 +1,35 @@
+version: "3.1"
+services:
+
+    mariadb:
+      image: mariadb:10.1
+      container_name: mariadb
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=dbname
+        - MYSQL_USER=dbuser
+        - MYSQL_PASSWORD=userpwd
+      ports:
+        - "3306:3306"
+
+    webserver:
+      image: httpd:alpine
+      container_name: webserver
+      working_dir: /usr/local/apache2/htdocs/
+      volumes:
+          - .:/usr/local/apache2/htdocs/
+          - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      ports:
+       - "80:80"
+
+    php-fpm:
+      build: php-fpm
+      container_name: php-fpm
+      working_dir: /usr/local/apache2/htdocs/
+      volumes:
+        - .:/usr/local/apache2/htdocs/
+        - ./php-fpm/php-ini-overrides.ini:/etc/php5/fpm/conf.d/99-overrides.ini
+
