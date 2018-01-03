@@ -9,9 +9,10 @@ This is simplest docker compose configuration for old LAMP projects based on Apa
 
 ## Networking
 
-Due migration to https://github.com/jwilder/nginx-proxy and Docker 1.9, need to setup user network for container communicating.
+Due to using https://github.com/jwilder/nginx-proxy and Docker 1.9, we need to setup user network for container communication.
 
-To create network with name "*www*" run `docker network create --driver bridge www`
+To create network with name "*www*" run:
+ `docker network create --driver bridge www`
 
 
 ## Configuration
