@@ -2,7 +2,7 @@ version: "3.1"
 services:
 
     mariadb:
-	  restart: unless-stopped
+      restart: unless-stopped
       image: mariadb:10.1
       container_name: sql
       working_dir: /application
@@ -18,7 +18,7 @@ services:
        - private-network
 
     webserver:
-	  restart: unless-stopped
+      restart: unless-stopped
       image: httpd:alpine
       container_name: webserver
       working_dir: /usr/local/apache2/htdocs/
@@ -31,10 +31,10 @@ services:
        - VIRTUAL_HOST=webserver.ltd,www.webserver.ltd
       networks:
        - www
-	   - private-network
+       - private-network
 
     php:
-	  restart: unless-stopped
+      restart: unless-stopped
       build: php-fpm
       container_name: php-fpm
       hostname: php-fpm
