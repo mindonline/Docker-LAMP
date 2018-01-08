@@ -36,8 +36,6 @@ services:
     php:
       restart: unless-stopped
       image: php:7.2-fpm-alpine
-      expose:
-       - "9000"
       container_name: php-fpm
       hostname: php-fpm
       working_dir: /usr/local/apache2/htdocs/
