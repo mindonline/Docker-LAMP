@@ -2,6 +2,7 @@ version: "3.1"
 services:
 
     mariadb:
+	  restart: unless-stopped
       image: mariadb:10.1
       container_name: sql
       working_dir: /application
@@ -14,9 +15,10 @@ services:
         - MYSQL_USER=user
         - MYSQL_PASSWORD=pass
       networks:
-       - www
+       - private-network
 
     webserver:
+	  restart: unless-stopped
       image: httpd:alpine
       container_name: webserver
       working_dir: /usr/local/apache2/htdocs/
@@ -29,19 +31,23 @@ services:
        - VIRTUAL_HOST=webserver.ltd,www.webserver.ltd
       networks:
        - www
+	   - private-network
 
     php:
+	  restart: unless-stopped
       build: php-fpm
       container_name: php-fpm
       hostname: php-fpm
       working_dir: /usr/local/apache2/htdocs/
       networks:
-       - www
+       - private-network
       volumes:
         - ./html/:/usr/local/apache2/htdocs/
         - ./php-fpm/php-ini-overrides.ini:/etc/php5/fpm/conf.d/99-overrides.ini
 
 networks:
+  private-network:
+    internal: true
   www:
     external:
       name: www
