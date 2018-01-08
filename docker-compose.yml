@@ -35,7 +35,9 @@ services:
 
     php:
       restart: unless-stopped
-      build: php-fpm
+      image: php:7.2-fpm-alpine
+      expose:
+       - "9000"
       container_name: php-fpm
       hostname: php-fpm
       working_dir: /usr/local/apache2/htdocs/
@@ -43,7 +45,6 @@ services:
        - private-network
       volumes:
         - ./html/:/usr/local/apache2/htdocs/
-        - ./php-fpm/php-ini-overrides.ini:/etc/php5/fpm/conf.d/99-overrides.ini
 
 networks:
   private-network:
